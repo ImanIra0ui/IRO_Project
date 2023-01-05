@@ -8,9 +8,9 @@ from webots_ros2_driver.webots_launcher import WebotsLauncher
 
 
 def generate_launch_description():
-    package_dir = get_package_share_directory('part2')
+    package_dir = get_package_share_directory('mini_project')
 
-    world = PathJoinSubstitution([package_dir, 'worlds', 'part_2_world.wbt'])
+    world = PathJoinSubstitution([package_dir, 'worlds', 'mini_project_world.wbt'])
     webots = WebotsLauncher(
         world=PathJoinSubstitution([package_dir, 'worlds', world]),
         mode='pause'
