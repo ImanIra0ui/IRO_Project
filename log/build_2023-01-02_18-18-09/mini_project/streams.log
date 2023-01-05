@@ -1,0 +1,23 @@
+[2.587s] Invoking command in '/home/iman/ros2_ws/src/mini_project': PYTHONPATH=/home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/mini_project build --build-base /home/iman/ros2_ws/src/mini_project/build/mini_project/build install --prefix /home/iman/ros2_ws/src/mini_project/install/mini_project --record /home/iman/ros2_ws/src/mini_project/build/mini_project/install.log --single-version-externally-managed
+[3.614s] running egg_info
+[3.616s] writing build/mini_project/mini_project.egg-info/PKG-INFO
+[3.617s] writing dependency_links to build/mini_project/mini_project.egg-info/dependency_links.txt
+[3.617s] writing entry points to build/mini_project/mini_project.egg-info/entry_points.txt
+[3.618s] writing requirements to build/mini_project/mini_project.egg-info/requires.txt
+[3.618s] writing top-level names to build/mini_project/mini_project.egg-info/top_level.txt
+[3.624s] reading manifest file 'build/mini_project/mini_project.egg-info/SOURCES.txt'
+[3.627s] writing manifest file 'build/mini_project/mini_project.egg-info/SOURCES.txt'
+[3.627s] running build
+[3.627s] running build_py
+[3.628s] running install
+[3.628s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[3.628s]   warnings.warn(
+[3.629s] running install_lib
+[3.634s] running install_data
+[3.636s] running install_egg_info
+[3.641s] removing '/home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project-0.3.0-py3.10.egg-info' (and everything under it)
+[3.642s] Copying build/mini_project/mini_project.egg-info to /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project-0.3.0-py3.10.egg-info
+[3.644s] running install_scripts
+[3.718s] Installing potential_field_navigation script to /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/mini_project
+[3.719s] writing list of installed files to '/home/iman/ros2_ws/src/mini_project/build/mini_project/install.log'
+[3.782s] Invoked command in '/home/iman/ros2_ws/src/mini_project' returned '0': PYTHONPATH=/home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/mini_project build --build-base /home/iman/ros2_ws/src/mini_project/build/mini_project/build install --prefix /home/iman/ros2_ws/src/mini_project/install/mini_project --record /home/iman/ros2_ws/src/mini_project/build/mini_project/install.log --single-version-externally-managed

@@ -1,0 +1,36 @@
+[1.925s] Invoking command in '/home/iman/ros2_ws/src/mini_project': PYTHONPATH=/home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages: /usr/bin/python3 setup.py egg_info --egg-base build/mini_project build --build-base /home/iman/ros2_ws/src/mini_project/build/mini_project/build install --prefix /home/iman/ros2_ws/src/mini_project/install/mini_project --record /home/iman/ros2_ws/src/mini_project/build/mini_project/install.log --single-version-externally-managed
+[2.637s] running egg_info
+[2.639s] creating build/mini_project/mini_project.egg-info
+[2.640s] writing build/mini_project/mini_project.egg-info/PKG-INFO
+[2.640s] writing dependency_links to build/mini_project/mini_project.egg-info/dependency_links.txt
+[2.641s] writing entry points to build/mini_project/mini_project.egg-info/entry_points.txt
+[2.641s] writing requirements to build/mini_project/mini_project.egg-info/requires.txt
+[2.641s] writing top-level names to build/mini_project/mini_project.egg-info/top_level.txt
+[2.642s] writing manifest file 'build/mini_project/mini_project.egg-info/SOURCES.txt'
+[2.646s] reading manifest file 'build/mini_project/mini_project.egg-info/SOURCES.txt'
+[2.649s] writing manifest file 'build/mini_project/mini_project.egg-info/SOURCES.txt'
+[2.650s] running build
+[2.650s] running build_py
+[2.650s] creating /home/iman/ros2_ws/src/mini_project/build/mini_project/build
+[2.651s] creating /home/iman/ros2_ws/src/mini_project/build/mini_project/build/lib
+[2.651s] creating /home/iman/ros2_ws/src/mini_project/build/mini_project/build/lib/mini_project
+[2.651s] copying mini_project/potential_field_navigation.py -> /home/iman/ros2_ws/src/mini_project/build/mini_project/build/lib/mini_project
+[2.652s] copying mini_project/__init__.py -> /home/iman/ros2_ws/src/mini_project/build/mini_project/build/lib/mini_project
+[2.652s] running install
+[2.652s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[2.653s]   warnings.warn(
+[2.653s] running install_lib
+[2.654s] creating /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project
+[2.655s] copying /home/iman/ros2_ws/src/mini_project/build/mini_project/build/lib/mini_project/potential_field_navigation.py -> /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project
+[2.655s] copying /home/iman/ros2_ws/src/mini_project/build/mini_project/build/lib/mini_project/__init__.py -> /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project
+[2.657s] byte-compiling /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project/potential_field_navigation.py to potential_field_navigation.cpython-310.pyc
+[2.662s] byte-compiling /home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages/mini_project/__init__.py to __init__.cpython-310.pyc
+[2.663s] running install_data
+[2.664s] creating /home/iman/ros2_ws/src/mini_project/install/mini_project/share
+[2.665s] creating /home/iman/ros2_ws/src/mini_project/install/mini_project/share/ament_index
+[2.665s] creating /home/iman/ros2_ws/src/mini_project/install/mini_project/share/ament_index/resource_index
+[2.665s] creating /home/iman/ros2_ws/src/mini_project/install/mini_project/share/ament_index/resource_index/packages
+[2.666s] copying resource/mini_project -> /home/iman/ros2_ws/src/mini_project/install/mini_project/share/ament_index/resource_index/packages
+[2.666s] creating /home/iman/ros2_ws/src/mini_project/install/mini_project/share/mini_project
+[2.666s] error: can't copy 'package.xml': doesn't exist or not a regular file
+[2.714s] Invoked command in '/home/iman/ros2_ws/src/mini_project' returned '1': PYTHONPATH=/home/iman/ros2_ws/src/mini_project/install/mini_project/lib/python3.10/site-packages: /usr/bin/python3 setup.py egg_info --egg-base build/mini_project build --build-base /home/iman/ros2_ws/src/mini_project/build/mini_project/build install --prefix /home/iman/ros2_ws/src/mini_project/install/mini_project --record /home/iman/ros2_ws/src/mini_project/build/mini_project/install.log --single-version-externally-managed
