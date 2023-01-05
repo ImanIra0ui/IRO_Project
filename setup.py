@@ -26,7 +26,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'potential_field_navigation = mini_project.potential_field_navigation:main'
+            'visual_navigation = mini_project.visual_navigation:main'
         ],
     },
 )

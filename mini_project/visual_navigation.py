@@ -199,7 +199,7 @@ class GroundtruthPose(object):
 
 class PotentialFieldNavigation(Node):
     def __init__(self, args):
-        super().__init__('potential_field_navigation')
+        super().__init__('visual_field_navigation')
         self.image = [[]]
         self._publisher = self.create_publisher(Twist, 'cmd_vel', 5)
         # Keep track of groundtruth position for plotting purposes.
@@ -209,7 +209,7 @@ class PotentialFieldNavigation(Node):
         self.camera_subscriber = self.create_subscription(Image, 'TurtleBot3Burger/camera', self.image_callback, 5)
         share_tmp_dir = os.path.join(get_package_share_directory('part2'), 'tmp')
         os.makedirs(share_tmp_dir, exist_ok=True)
-        file_path = os.path.join(share_tmp_dir, 'potential_field_logging.txt')
+        file_path = os.path.join(share_tmp_dir, 'visual_field_logging.txt')
         self._temp_file = file_path
         self._pose_history = []
         self._vis = False
@@ -239,7 +239,7 @@ class PotentialFieldNavigation(Node):
         vel_msg.angular.z = w
         self._publisher.publish(vel_msg)
 
-        # Log groundtruth positions in tmp/potential_field_logging.txt
+        # Log groundtruth positions in tmp/visual_field_logging.txt
         self._pose_history.append(self._groundtruth.pose)
         if len(self._pose_history) % 10:
           with open(self._temp_file, 'a') as fp:
@@ -250,11 +250,11 @@ class PotentialFieldNavigation(Node):
 def run(args):
     rclpy.init()
 
-    potential_field_navigation_node = PotentialFieldNavigation(args)
+    visual_field_navigation_node = PotentialFieldNavigation(args)
 
-    rclpy.spin(potential_field_navigation_node)
+    rclpy.spin(visual_field_navigation_node)
 
-    potential_field_navigation_node.destroy_node()
+    visual_field_navigation_node.destroy_node()
     rclpy.shutdown()
 
 
