@@ -30,8 +30,8 @@ CYLINDER_RADIUS = .3
 GOAL_POSITION = np.array([1.5, 1.5], dtype=np.float32)
 MAX_SPEED = .25
 EPSILON = .2
-WIDTH = 64
-P_COEFFICIENT = 0.5
+WIDTH = 0
+P_COEFFICIENT = 0.1
 
 X = 0
 Y = 1
@@ -40,39 +40,42 @@ bridge = CvBridge()
 
 def process_image(img):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-    lower_red = np.array([50, 150, 0])
-    upper_red = np.array([200, 230, 255])
+    lower_red = np.array([161, 155, 84])
+    upper_red = np.array([179, 255, 255])
 
     lower_gray = np.array([0, 0, 0])
     upper_gray = np.array([255, 10, 255])
+    wall_upper = np.array([116, 39, 87])
+
+    lower_green = np.array([36, 25, 25])
+    upper_green = np.array([70, 255,255])
 
     mask = cv2.inRange(img, lower_red, upper_red)
     mask2 = cv2.inRange(img, lower_gray, upper_gray)
+    mask3 = cv2.inRange(img, lower_gray, wall_upper)
+    green_mask = cv2.inRange(img, lower_green, upper_green)
 
     # Find the largest segmented contour (red ball) and its center
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     contours2, _ = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours3 = cv2.findContours(mask3, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    green_contours = cv2.findContours(green_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
+    max_u = .2 
     velocity = 0
-    u = 0.  # [m/s]
-    w = 0.  # [rad/s] going counter-clockwise.
-
-    # MISSING: Implement a braitenberg controller that takes the range
-    # measurements given in argument to steer the robot.
-    max_u = .2    
-    r = 0.033
-    d = 0.16
+    u = max_u 
+    w = 0. 
+       
+    r = 0.33
+    d = 0.105 
 
     #if goal
     if(contours):
-    #     output = cv2.bitwise_and(img, img, mask = mask)
-	# # show the images
-    #     cv2.imshow("images", np.hstack([img, output]))
-    #     cv2.waitKey(0)
-    
-        print("GOAL")
+        
         largest_contour = max(contours, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
+        print("GOAL", largest_contour)
+
         if(largest_contour_center['m00'] != 0):
             center_x = int(largest_contour_center['m10'] / largest_contour_center['m00'])
         else:
@@ -80,27 +83,49 @@ def process_image(img):
 
         # Find error (ball distance from image center)
         error = WIDTH / 2 - center_x
-        print(error)    
-        print("woohoo", error== -3.0)
         
-        if(error == -3.0 or error == -2.0):
+        if(largest_contour[0][0][0] <= 1):
             print("HERE")
-            u = max_u
+            u = .0
             w = .0
 
             return u, w
 
         # Use simple proportional controller to follow the ball
-        velocity  = error * P_COEFFICIENT
+        velocity  = abs(error * P_COEFFICIENT)
 
-        u += r/2*velocity
-        w += r/d*velocity
+        # u = r/2*velocity
+        # w = r/d*velocity
 
+        u = max_u
+        w = .0
+        
         return u, w
 
     #if obstacle
-    if(contours2):
+    if(green_contours):
         print("OBSTACLE")
+        largest_contour = max(green_contours, key=cv2.contourArea)
+        largest_contour_center = cv2.moments(largest_contour)
+
+        if(largest_contour_center['m00'] != 0):
+            center_x = int(largest_contour_center['m10'] / largest_contour_center['m00'])
+        else:
+            center_x = int(largest_contour_center['m10'])
+
+        # Find error (ball distance from image center)
+        error = WIDTH / 2 - center_x
+
+        # Use simple proportional controller to avoid the obstacle
+        velocity = error * P_COEFFICIENT
+
+        if(velocity != 0.0):
+            u = r/2*velocity
+            w = - r/d*velocity
+
+    #if wall
+    elif(contours2):
+        print("WALL")
         largest_contour = max(contours2, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
         if(largest_contour_center['m00'] != 0):
@@ -114,12 +139,7 @@ def process_image(img):
         # Use simple proportional controller to avoid the obstacle
         velocity = error * P_COEFFICIENT
 
-        if(velocity == 0):
-            u = max_u
-            w = .0
-
-        else:
-
+        if(velocity != 0.0):
             u += r/2*velocity
             w += - r/d*velocity
 
@@ -202,6 +222,7 @@ class PotentialFieldNavigation(Node):
         cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         # img = msg
         img = np.asarray(cv_image, dtype=np.uint8)
+        WIDTH = img.shape[0]
         img = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
         img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
         self.image = cv2.flip(img, 1)
