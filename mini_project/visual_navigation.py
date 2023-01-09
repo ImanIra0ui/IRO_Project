@@ -206,7 +206,7 @@ class PotentialFieldNavigation(Node):
         self._groundtruth_subscriber = self.create_subscription(Odometry, 'odom',
                                                                 self._groundtruth.callback, 5)
         self.camera_subscriber = self.create_subscription(Image, 'TurtleBot3Burger/camera', self.image_callback, 5)
-        share_tmp_dir = os.path.join(get_package_share_directory('part2'), 'tmp')
+        share_tmp_dir = os.path.join(get_package_share_directory('mini_project'), 'tmp')
         os.makedirs(share_tmp_dir, exist_ok=True)
         file_path = os.path.join(share_tmp_dir, 'visual_field_logging.txt')
         self._temp_file = file_path
