@@ -84,7 +84,6 @@ def process_image(img):
         error = WIDTH / 2 - center_x
         
         if(largest_contour[0][0][0] == 0):
-            print("HERE", largest_contour[0][0][0])
             u = .0
             w = .0
 
@@ -103,7 +102,6 @@ def process_image(img):
 
     #if obstacle
     if(green_contours):
-        print("OBSTACLE")
         largest_contour = max(green_contours, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
 
@@ -124,7 +122,6 @@ def process_image(img):
 
     #if wall
     elif(contours2):
-        print("WALL")
         largest_contour = max(contours2, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
         if(largest_contour_center['m00'] != 0):
@@ -207,8 +204,10 @@ class PotentialFieldNavigation(Node):
                                                                 self._groundtruth.callback, 5)
         self.camera_subscriber = self.create_subscription(Image, 'TurtleBot3Burger/camera', self.image_callback, 5)
         share_tmp_dir = os.path.join(get_package_share_directory('mini_project'), 'tmp')
+        print("yep:", share_tmp_dir)
         os.makedirs(share_tmp_dir, exist_ok=True)
         file_path = os.path.join(share_tmp_dir, 'visual_field_logging.txt')
+        print("file path:", file_path)
         self._temp_file = file_path
         self._pose_history = []
         self._vis = False
