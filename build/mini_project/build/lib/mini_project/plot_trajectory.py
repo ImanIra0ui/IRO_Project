@@ -29,14 +29,14 @@ if __name__ == '__main__':
     y = np.sin(a) * .3 + .9
     plt.plot(x, y, 'g')
 
-    x = np.cos(a) * .3 + .69
+    x = np.cos(a) * .3 + 1.23
     y = np.sin(a) * .3 - .06
     plt.plot(x, y, 'g')
 
     #Ball.
     a = np.linspace(0., 2 * np.pi, 20)
-    x = np.cos(a) * .26 + 1.54
-    y = np.sin(a) * .26 - .06
+    x = np.cos(a) * .26 + 1.06
+    y = np.sin(a) * .26 - 1.01
     plt.plot(x, y, 'r')
 
     # Walls.

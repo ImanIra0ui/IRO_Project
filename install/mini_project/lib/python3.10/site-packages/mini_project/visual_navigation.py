@@ -38,27 +38,22 @@ Y = 1
 YAW = 2
 bridge = CvBridge()
 
-def process_image(img):
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+def get_velocity(img):
     lower_red = np.array([161, 155, 84])
     upper_red = np.array([179, 255, 255])
 
     lower_gray = np.array([0, 0, 0])
     upper_gray = np.array([255, 10, 255])
-    wall_upper = np.array([116, 39, 87])
 
     lower_green = np.array([36, 25, 25])
     upper_green = np.array([70, 255,255])
 
     mask = cv2.inRange(img, lower_red, upper_red)
     mask2 = cv2.inRange(img, lower_gray, upper_gray)
-    mask3 = cv2.inRange(img, lower_gray, wall_upper)
     green_mask = cv2.inRange(img, lower_green, upper_green)
 
-    # Find the largest segmented contour (red ball) and its center
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     contours2, _ = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    contours3 = cv2.findContours(mask3, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     green_contours = cv2.findContours(green_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
     max_u = .2 
@@ -71,7 +66,10 @@ def process_image(img):
 
     #if goal
     if(contours):
-        
+                
+        u = max_u
+        w = .0
+
         largest_contour = max(contours, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
 
@@ -84,26 +82,16 @@ def process_image(img):
         error = WIDTH / 2 - center_x
         
         if(largest_contour[0][0][0] == 0):
-            print("HERE", largest_contour[0][0][0])
             u = .0
             w = .0
 
             return u, w
 
-        # Use simple proportional controller to follow the ball
-        velocity  = abs(error * P_COEFFICIENT)
-
-        # u = r/2*velocity
-        # w = r/d*velocity
-
-        u = max_u
-        w = .0
-        
         return u, w
 
     #if obstacle
     if(green_contours):
-        print("OBSTACLE")
+
         largest_contour = max(green_contours, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
 
@@ -120,11 +108,12 @@ def process_image(img):
 
         if(velocity != 0.0):
             u = r/2*velocity
-            w = - r/d*velocity
+            w = w - r/d*velocity
+        
+        return u, w
 
     #if wall
     elif(contours2):
-        print("WALL")
         largest_contour = max(contours2, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
         if(largest_contour_center['m00'] != 0):
@@ -139,8 +128,8 @@ def process_image(img):
         velocity = error * P_COEFFICIENT
 
         if(velocity != 0.0):
-            u += r/2*velocity
-            w += - r/d*velocity
+            u = r/2*velocity
+            w = - r/d*velocity
 
     return u, w
 
@@ -150,29 +139,6 @@ def cap(v, max_speed):
   if n > max_speed:
     return v / n * max_speed
   return v
-
-def feedback_linearized(pose, velocity, epsilon):
-    u = 0.  # [m/s]
-    w = 0.  # [rad/s] going counter-clockwise.
-
-    if pose[0] == 1.5 and pose[1] == 1.5:
-        return u, w
-
-    theta = pose[2]
-    
-    x_dot = velocity[0]
-    y_dot = velocity[1]
-
-
-    u = x_dot*np.cos(theta) + y_dot*np.sin(theta)
-    w = (1/epsilon)*((-x_dot * np.sin(theta)) + (y_dot*np.cos(theta)))
-
-    if(u>MAX_SPEED):
-        u = MAX_SPEED
-
-    u = np.float64(u)
-
-    return u, -w
 
 
 class GroundtruthPose(object):
@@ -206,7 +172,7 @@ class PotentialFieldNavigation(Node):
         self._groundtruth_subscriber = self.create_subscription(Odometry, 'odom',
                                                                 self._groundtruth.callback, 5)
         self.camera_subscriber = self.create_subscription(Image, 'TurtleBot3Burger/camera', self.image_callback, 5)
-        share_tmp_dir = os.path.join(get_package_share_directory('part2'), 'tmp')
+        share_tmp_dir = os.path.join(get_package_share_directory('mini_project'), 'tmp')
         os.makedirs(share_tmp_dir, exist_ok=True)
         file_path = os.path.join(share_tmp_dir, 'visual_field_logging.txt')
         self._temp_file = file_path
@@ -223,8 +189,10 @@ class PotentialFieldNavigation(Node):
         img = np.asarray(cv_image, dtype=np.uint8)
         WIDTH = img.shape[0]
         img = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
+        self.image = img
         img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-        self.image = cv2.flip(img, 1)
+        img = cv2.flip(img, 1)
+        self.image = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
     def timer_callback(self):
         # Make sure all measurements are ready.
@@ -232,7 +200,7 @@ class PotentialFieldNavigation(Node):
             return
 
         # Get velocity.
-        u, w = process_image(self.image)
+        u, w = get_velocity(self.image)
         vel_msg = Twist()
         vel_msg.linear.x = u
         vel_msg.angular.z = w
@@ -265,3 +233,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

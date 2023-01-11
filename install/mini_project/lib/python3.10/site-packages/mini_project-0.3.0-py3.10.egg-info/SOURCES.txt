@@ -11,6 +11,7 @@ build/mini_project/mini_project.egg-info/zip-safe
 launch/robot_namespace.launch.yaml
 launch/visual_navigation_launch.py
 mini_project/__init__.py
+mini_project/plot_trajectory.py
 mini_project/visual_navigation.py
 resource/mini_project
 resource/ros2control.yml
