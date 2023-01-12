@@ -8,4 +8,4 @@ orthographicViewHeight: 1
 textFiles: -1
 robotWindow: TurtleBot3Burger
 consoles: Console:All:All
-renderingDevicePerspectives: TurtleBot3Burger:camera;1;4.4375;0.00551612;0.00718686
+renderingDevicePerspectives: TurtleBot3Burger:camera;1;5.03125;0.00866824;0.103696

@@ -25,11 +25,27 @@ if __name__ == '__main__':
         
     # Cylinders.
     a = np.linspace(0., 2 * np.pi, 20)
-    x = np.cos(a) * .3 + .42
-    y = np.sin(a) * .3 + .9
+    x = np.cos(a) * .3 + -1.04
+    y = np.sin(a) * .3 + .86
+    plt.plot(x, y, 'g')
+
+    x = np.cos(a) * .3 + 1.5
+    y = np.sin(a) * .3 + .86
+    plt.plot(x, y, 'g')
+
+    x = np.cos(a) * .3 - .58
+    y = np.sin(a) * .3 - 1.2
     plt.plot(x, y, 'g')
 
     x = np.cos(a) * .3 + 1.23
+    y = np.sin(a) * .3 - .06
+    plt.plot(x, y, 'g')
+
+    x = np.cos(a) * .3 + 0.42
+    y = np.sin(a) * .3 + .9
+    plt.plot(x, y, 'g')
+
+    x = np.cos(a) * .3 - .32
     y = np.sin(a) * .3 - .06
     plt.plot(x, y, 'g')
 
