@@ -71,16 +71,7 @@ def get_velocity(img):
         w = .0
 
         largest_contour = max(contours, key=cv2.contourArea)
-        largest_contour_center = cv2.moments(largest_contour)
 
-        if(largest_contour_center['m00'] != 0):
-            center_x = int(largest_contour_center['m10'] / largest_contour_center['m00'])
-        else:
-            center_x = int(largest_contour_center['m10'])
-
-        # Find error (ball distance from image center)
-        error = WIDTH / 2 - center_x
-        
         if(largest_contour[0][0][0] == 0):
             u = .0
             w = .0
@@ -91,7 +82,8 @@ def get_velocity(img):
 
     #if obstacle
     if(green_contours):
-
+            
+        print("obstacle")
         largest_contour = max(green_contours, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
 
@@ -100,20 +92,23 @@ def get_velocity(img):
         else:
             center_x = int(largest_contour_center['m10'])
 
-        # Find error (ball distance from image center)
+        if(largest_contour[0][0][0]>=21 and largest_contour[0][0][0]<=26):
+            return u, w
+
         error = WIDTH / 2 - center_x
 
-        # Use simple proportional controller to avoid the obstacle
         velocity = error * P_COEFFICIENT
 
+        print(velocity)
         if(velocity != 0.0):
-            u = r/2*velocity
+            u = -r/2*velocity
             w = w - r/d*velocity
         
         return u, w
 
     #if wall
     elif(contours2):
+        print("wall")
         largest_contour = max(contours2, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
         if(largest_contour_center['m00'] != 0):
@@ -185,9 +180,7 @@ class PotentialFieldNavigation(Node):
 
     def image_callback(self, msg):
         cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
-        # img = msg
         img = np.asarray(cv_image, dtype=np.uint8)
-        WIDTH = img.shape[0]
         img = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
         self.image = img
         img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)

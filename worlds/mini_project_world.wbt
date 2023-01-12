@@ -3,11 +3,10 @@ WorldInfo {
   basicTimeStep 33
 }
 Viewpoint {
-  orientation -0.5868197286394572 0.572961184749077 0.5721521535836844 2.0883556185346115
-  position -1.2169491025034962 -0.37143589450989856 12.052313139139253
+  orientation -0.5862801865462145 0.5804897882012554 0.565072693250521 2.08702534300624
+  position -1.9950619580108266 0.05539671414933234 11.031483279072688
 }
 TurtleBot3Burger {
-  translation -1.49 0 0
   controller "<extern>"
   controllerArgs [
     ""
@@ -34,7 +33,7 @@ TurtleBot3Burger {
   ]
 }
 DEF BALL Solid {
-  translation 1.06 -0.71 0.19
+  translation -1.64 1.62 0.19
   children [
     Shape {
       appearance PBRAppearance {
@@ -61,47 +60,7 @@ RectangleArena {
   wallHeight 0.5
 }
 DEF CYLINDER Solid {
-  translation -1.04 0.86 0.25
-  children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 0 0.8 0.1
-        metalness 0
-        normalMapFactor 0
-        occlusionMapStrength 0
-        emissiveIntensity 0
-      }
-      geometry DEF CYLINDER_GEOMETRY Cylinder {
-        height 0.5
-        radius 0.2
-      }
-    }
-  ]
-  name "Cylinder_2(1)"
-  boundingObject USE CYLINDER_GEOMETRY
-}
-DEF CYLINDER Solid {
-  translation 1.5 0.86 0.25
-  children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 0 0.8 0.1
-        metalness 0
-        normalMapFactor 0
-        occlusionMapStrength 0
-        emissiveIntensity 0
-      }
-      geometry DEF CYLINDER_GEOMETRY Cylinder {
-        height 0.5
-        radius 0.2
-      }
-    }
-  ]
-  name "Cylinder_1(3)"
-  boundingObject USE CYLINDER_GEOMETRY
-}
-DEF CYLINDER Solid {
-  translation -0.58 -0.98 0.25
+  translation -1.12 0.9 0.25
   children [
     Shape {
       appearance PBRAppearance {
@@ -121,7 +80,27 @@ DEF CYLINDER Solid {
   boundingObject USE CYLINDER_GEOMETRY
 }
 DEF CYLINDER Solid {
-  translation 1.23 -0.06 0.25
+  translation 0.04 -1.09 0.25
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.8 0.1
+        metalness 0
+        normalMapFactor 0
+        occlusionMapStrength 0
+        emissiveIntensity 0
+      }
+      geometry DEF CYLINDER_GEOMETRY Cylinder {
+        height 0.5
+        radius 0.2
+      }
+    }
+  ]
+  name "Cylinder_2(1)"
+  boundingObject USE CYLINDER_GEOMETRY
+}
+DEF CYLINDER Solid {
+  translation 0.42 0.79 0.25
   children [
     Shape {
       appearance PBRAppearance {
@@ -141,7 +120,7 @@ DEF CYLINDER Solid {
   boundingObject USE CYLINDER_GEOMETRY
 }
 DEF CYLINDER Solid {
-  translation 0.42 0.9 0.25
+  translation 1.23 -0.06 0.25
   children [
     Shape {
       appearance PBRAppearance {
@@ -158,25 +137,5 @@ DEF CYLINDER Solid {
     }
   ]
   name "Cylinder_2"
-  boundingObject USE CYLINDER_GEOMETRY
-}
-DEF CYLINDER Solid {
-  translation -0.32 -0.06 0.25
-  children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 0 0.8 0.1
-        metalness 0
-        normalMapFactor 0
-        occlusionMapStrength 0
-        emissiveIntensity 0
-      }
-      geometry DEF CYLINDER_GEOMETRY Cylinder {
-        height 0.5
-        radius 0.2
-      }
-    }
-  ]
-  name "Cylinder_1(2)"
   boundingObject USE CYLINDER_GEOMETRY
 }
