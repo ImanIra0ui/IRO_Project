@@ -1,12 +1,5 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import numpy as np
 import matplotlib.pylab as plt
-from rclpy.node import Node
-import rclpy
-import sys
 import os
 from ament_index_python.packages import get_package_share_directory
 
@@ -38,7 +31,6 @@ if __name__ == '__main__':
     plt.plot(x, y, 'g')
 
     #Ball.
-    a = np.linspace(0., 2 * np.pi, 20)
     x = np.cos(a) * .26 - 1.64
     y = np.sin(a) * .26 + 1.62
     plt.plot(x, y, 'r')

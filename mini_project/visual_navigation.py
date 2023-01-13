@@ -24,14 +24,7 @@ from scipy.spatial.transform import Rotation as R
 from nav_msgs.msg import Odometry
 
 WALL_OFFSET = 2.
-ROBOT_RADIUS = 0.105 / 2.
-CYLINDER_POSITION = np.array([.5, .6], dtype=np.float32)
-CYLINDER_RADIUS = .3
-GOAL_POSITION = np.array([1.5, 1.5], dtype=np.float32)
-MAX_SPEED = .25
-EPSILON = .2
 WIDTH = 0
-P_COEFFICIENT = 0.1
 
 X = 0
 Y = 1
@@ -58,6 +51,7 @@ def get_velocity(img):
 
     max_u = .2 
     velocity = 0
+
     u = max_u 
     w = 0. 
        
@@ -83,7 +77,6 @@ def get_velocity(img):
     #if obstacle
     if(green_contours):
             
-        print("obstacle")
         largest_contour = max(green_contours, key=cv2.contourArea)
         largest_contour_center = cv2.moments(largest_contour)
 
@@ -97,12 +90,11 @@ def get_velocity(img):
 
         error = WIDTH / 2 - center_x
 
-        velocity = error * P_COEFFICIENT
+        velocity = error * 0.1
 
-        print(velocity)
         if(velocity != 0.0):
             u = -r/2*velocity
-            w = w - r/d*velocity
+            w = -r/d*velocity
         
         return u, w
 
@@ -120,20 +112,13 @@ def get_velocity(img):
         error = WIDTH / 2 - center_x
 
         # Use simple proportional controller to avoid the obstacle
-        velocity = error * P_COEFFICIENT
+        velocity = error * 0.1
 
         if(velocity != 0.0):
             u = r/2*velocity
             w = - r/d*velocity
 
     return u, w
-
-
-def cap(v, max_speed):
-  n = abs(v)
-  if n > max_speed:
-    return v / n * max_speed
-  return v
 
 
 class GroundtruthPose(object):
