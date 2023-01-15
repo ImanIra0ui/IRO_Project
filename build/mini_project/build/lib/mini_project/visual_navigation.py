@@ -24,7 +24,6 @@ from scipy.spatial.transform import Rotation as R
 from nav_msgs.msg import Odometry
 
 WALL_OFFSET = 2.
-WIDTH = 0
 
 X = 0
 Y = 1
@@ -64,9 +63,7 @@ def get_velocity(img):
         u = max_u
         w = .0
 
-        largest_contour = max(contours, key=cv2.contourArea)
-
-        if(largest_contour[0][0][0] == 0):
+        if(contours[0][0][0][0] == 0):
             u = .0
             w = .0
 
@@ -78,45 +75,44 @@ def get_velocity(img):
     if(green_contours):
             
         largest_contour = max(green_contours, key=cv2.contourArea)
-        largest_contour_center = cv2.moments(largest_contour)
+        largest_contour_moments = cv2.moments(largest_contour)
 
-        if(largest_contour_center['m00'] != 0):
-            center_x = int(largest_contour_center['m10'] / largest_contour_center['m00'])
+        if(largest_contour_moments['m00'] != 0):
+            center_x = int(largest_contour_moments['m10'] / largest_contour_moments['m00'])
         else:
-            center_x = int(largest_contour_center['m10'])
+            center_x = int(largest_contour_moments['m10'])
 
-        if(largest_contour[0][0][0]>=21 and largest_contour[0][0][0]<=26):
+        if(largest_contour[0][0][0]>=19 and largest_contour[0][0][0]<=26):
             return u, w
 
-        error = WIDTH / 2 - center_x
-
-        velocity = error * 0.1
-
-        if(velocity != 0.0):
-            u = -r/2*velocity
-            w = -r/d*velocity
-        
-        return u, w
-
-    #if wall
-    elif(contours2):
-        print("wall")
-        largest_contour = max(contours2, key=cv2.contourArea)
-        largest_contour_center = cv2.moments(largest_contour)
-        if(largest_contour_center['m00'] != 0):
-            center_x = int(largest_contour_center['m10'] / largest_contour_center['m00'])
-        else:
-            center_x = int(largest_contour_center['m10'])
-
-        # Find error (ball distance from image center)
-        error = WIDTH / 2 - center_x
-
-        # Use simple proportional controller to avoid the obstacle
+        error = - center_x
         velocity = error * 0.1
 
         if(velocity != 0.0):
             u = r/2*velocity
-            w = - r/d*velocity
+            w = -r/d*velocity
+        
+        else:
+            print("YES")
+
+        return u, w
+
+    #if wall
+    elif(contours2):
+        largest_contour = max(contours2, key=cv2.contourArea)
+        largest_contour_moments = cv2.moments(largest_contour)
+
+        if(largest_contour_moments['m00'] != 0):
+            center_x = int(largest_contour_moments['m10'] / largest_contour_moments['m00'])
+        else:
+            center_x = int(largest_contour_moments['m10'])
+
+        error = - center_x
+        velocity = error * 0.1
+
+        if(velocity != 0.0):
+            u = r/2*velocity
+            w = -r/d*velocity
 
     return u, w
 
@@ -204,7 +200,7 @@ def run(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Runs potential field navigation')
+    parser = argparse.ArgumentParser(description='Runs visual navigation')
     args, unknown = parser.parse_known_args()
     run(args)
 

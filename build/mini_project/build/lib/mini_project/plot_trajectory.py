@@ -31,7 +31,6 @@ if __name__ == '__main__':
     plt.plot(x, y, 'g')
 
     #Ball.
-    a = np.linspace(0., 2 * np.pi, 20)
     x = np.cos(a) * .26 - 1.64
     y = np.sin(a) * .26 + 1.62
     plt.plot(x, y, 'r')
