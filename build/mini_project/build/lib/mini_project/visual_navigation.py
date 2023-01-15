@@ -59,9 +59,6 @@ def get_velocity(img):
 
     #if goal
     if(contours):
-                
-        u = max_u
-        w = .0
 
         if(contours[0][0][0][0] == 0):
             u = .0
@@ -82,18 +79,18 @@ def get_velocity(img):
         else:
             center_x = int(largest_contour_moments['m10'])
 
-        if(largest_contour[0][0][0]>=19 and largest_contour[0][0][0]<=26):
-            return u, w
+        # if(largest_contour[0][0][0]>=19 and largest_contour[0][0][0]<=26):
+        #     return u, w
 
-        error = - center_x
+        error = center_x
         velocity = error * 0.1
 
         if(velocity != 0.0):
-            u = r/2*velocity
+            u = r/2*abs(velocity)
             w = -r/d*velocity
         
         else:
-            print("YES")
+            w = -np.pi/2
 
         return u, w
 
@@ -107,11 +104,11 @@ def get_velocity(img):
         else:
             center_x = int(largest_contour_moments['m10'])
 
-        error = - center_x
+        error = center_x
         velocity = error * 0.1
 
         if(velocity != 0.0):
-            u = r/2*velocity
+            u = r/2*abs(velocity)
             w = -r/d*velocity
 
     return u, w
