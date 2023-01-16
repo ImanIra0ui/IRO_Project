@@ -16,7 +16,7 @@ if __name__ == '__main__':
     a = np.linspace(0., 2 * np.pi, 20)
     x = np.cos(a) * .3 + -1.12
     y = np.sin(a) * .3 + .9
-    plt.plot(x, y, 'g')
+    plt.plot(x, y, 'cyan')
 
     x = np.cos(a) * .3 + .04
     y = np.sin(a) * .3 - 1.09
@@ -24,11 +24,11 @@ if __name__ == '__main__':
 
     x = np.cos(a) * .3 - .58
     y = np.sin(a) * .3 - .19
-    plt.plot(x, y, 'g')
+    plt.plot(x, y, 'y')
 
     x = np.cos(a) * .3 + .42
     y = np.sin(a) * .3 + .79
-    plt.plot(x, y, 'g')
+    plt.plot(x, y, 'b')
 
     #Ball.
     x = np.cos(a) * .26 - 1.64

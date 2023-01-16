@@ -34,19 +34,9 @@ def get_velocity(img):
     lower_red = np.array([161, 155, 84])
     upper_red = np.array([179, 255, 255])
 
-    lower_gray = np.array([0, 0, 0])
-    upper_gray = np.array([255, 10, 255])
-
-    lower_green = np.array([36, 25, 25])
-    upper_green = np.array([70, 255,255])
-
     mask = cv2.inRange(img, lower_red, upper_red)
-    mask2 = cv2.inRange(img, lower_gray, upper_gray)
-    green_mask = cv2.inRange(img, lower_green, upper_green)
 
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    contours2, _ = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    green_contours = cv2.findContours(green_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
     max_u = .2
 
@@ -93,7 +83,7 @@ def get_velocity(img):
                 w = -r/d*center_x
 
             return u, w
-            
+
     print("here")
     return u, w
 
