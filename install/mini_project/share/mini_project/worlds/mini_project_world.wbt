@@ -7,7 +7,7 @@ Viewpoint {
   position -1.2169491025034962 -0.37143589450989856 12.052313139139253
 }
 TurtleBot3Burger {
-  hidden rotation_4 0.9999906836545638 -0.004316546797710843 5.274601714776402e-06 0.00774714970986447
+  hidden rotation_4 0.9999906836545637 -0.004316546797710843 5.274601714776402e-06 0.00774714970986447
   translation -1.49 0 0
   controller "<extern>"
   controllerArgs [
@@ -99,26 +99,6 @@ DEF CYLINDER Solid {
     }
   ]
   name "Cylinder_1(3)"
-  boundingObject USE CYLINDER_GEOMETRY
-}
-DEF CYLINDER Solid {
-  translation -0.58 -0.98 0.25
-  children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 0 0.8 0.1
-        metalness 0
-        normalMapFactor 0
-        occlusionMapStrength 0
-        emissiveIntensity 0
-      }
-      geometry DEF CYLINDER_GEOMETRY Cylinder {
-        height 0.5
-        radius 0.2
-      }
-    }
-  ]
-  name "Cylinder_1(1)"
   boundingObject USE CYLINDER_GEOMETRY
 }
 DEF CYLINDER Solid {

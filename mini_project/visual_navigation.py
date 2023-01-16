@@ -48,8 +48,7 @@ def get_velocity(img):
     contours2, _ = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     green_contours = cv2.findContours(green_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0]
 
-    max_u = .2 
-    velocity = 0
+    max_u = .2
 
     u = max_u 
     w = 0. 
@@ -82,15 +81,11 @@ def get_velocity(img):
         if(largest_contour[0][0][0]>=19 and largest_contour[0][0][0]<=26):
             return u, w
 
-        error = center_x
-        velocity = error * 0.1
+        center_x = center_x * 0.1
 
-        if(velocity != 0.0):
-            u = r/2*abs(velocity)
-            w = -r/d*velocity
-        
-        else:
-            w = -np.pi/2
+        if(center_x != 0.0):
+            u = r/2*abs(center_x)
+            w = -r/d*center_x
 
         return u, w
 
@@ -104,12 +99,11 @@ def get_velocity(img):
         else:
             center_x = int(largest_contour_moments['m10'])
 
-        error = center_x
-        velocity = error * 0.1
+        center_x = center_x * 0.1
 
-        if(velocity != 0.0):
-            u = r/2*abs(velocity)
-            w = -r/d*velocity
+        if(center_x != 0.0):
+            u = r/2*abs(center_x)
+            w = -r/d*center_x
 
     return u, w
 
