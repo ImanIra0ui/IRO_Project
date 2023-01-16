@@ -7,7 +7,7 @@ Viewpoint {
   position -1.2169491025034962 -0.37143589450989856 12.052313139139253
 }
 TurtleBot3Burger {
-  hidden rotation_4 0.9999906836545637 -0.004316546797710843 5.274601714776402e-06 0.00774714970986447
+  hidden rotation_4 0.9999906836545637 -0.004316546797710844 5.274601714776403e-06 0.00774714970986447
   translation -1.49 0 0
   controller "<extern>"
   controllerArgs [
@@ -62,7 +62,7 @@ RectangleArena {
   wallHeight 0.5
 }
 DEF CYLINDER Solid {
-  translation -1.04 0.86 0.25
+  translation -0.72 1.2 0.25
   children [
     Shape {
       appearance PBRAppearance {
