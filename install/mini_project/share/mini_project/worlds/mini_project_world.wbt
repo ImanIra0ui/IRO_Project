@@ -7,7 +7,7 @@ Viewpoint {
   position -1.2169491025034962 -0.37143589450989856 12.052313139139253
 }
 TurtleBot3Burger {
-  hidden rotation_4 0.9999906836545637 -0.004316546797710844 5.274601714776403e-06 0.00774714970986447
+  hidden rotation_4 0.9999906836545637 -0.0043165467977108445 5.2746017147764035e-06 0.00774714970986447
   translation -1.49 0 0
   controller "<extern>"
   controllerArgs [
@@ -66,7 +66,7 @@ DEF CYLINDER Solid {
   children [
     Shape {
       appearance PBRAppearance {
-        baseColor 0 0.8 0.1
+        baseColor 0 1 0.8
         metalness 0
         normalMapFactor 0
         occlusionMapStrength 0
@@ -86,7 +86,7 @@ DEF CYLINDER Solid {
   children [
     Shape {
       appearance PBRAppearance {
-        baseColor 0 0.8 0.1
+        baseColor 0.7 0.8 0.1
         metalness 0
         normalMapFactor 0
         occlusionMapStrength 0
@@ -106,7 +106,7 @@ DEF CYLINDER Solid {
   children [
     Shape {
       appearance PBRAppearance {
-        baseColor 0 0.8 0.1
+        baseColor 0 0 0.1
         metalness 0
         normalMapFactor 0
         occlusionMapStrength 0
@@ -146,7 +146,7 @@ DEF CYLINDER Solid {
   children [
     Shape {
       appearance PBRAppearance {
-        baseColor 0 0.8 0.1
+        baseColor 0 0.4 0.2
         metalness 0
         normalMapFactor 0
         occlusionMapStrength 0

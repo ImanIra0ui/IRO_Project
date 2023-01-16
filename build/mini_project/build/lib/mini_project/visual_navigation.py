@@ -69,13 +69,12 @@ def get_velocity(img):
 
     else:
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        ret, thresh = cv2.threshold(img_gray, 150, 255, cv2.THRESH_BINARY)
-        contours, hierarchy = cv2.findContours(image=thresh, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_NONE)
-
+        # ret, thresh = cv2.threshold(img_gray, 150, 255, cv2.THRESH_BINARY)
+        edged = cv2.Canny(img_gray, 30, 200)
+        contours, hierarchy = cv2.findContours(image=edged, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_NONE)
 
         #if obstacle
         if(contours):
-                
             largest_contour = max(contours, key=cv2.contourArea)
             largest_contour_moments = cv2.moments(largest_contour)
 
@@ -94,23 +93,8 @@ def get_velocity(img):
                 w = -r/d*center_x
 
             return u, w
-
-        #if wall
-        elif(contours2):
-            largest_contour = max(contours2, key=cv2.contourArea)
-            largest_contour_moments = cv2.moments(largest_contour)
-
-            if(largest_contour_moments['m00'] != 0):
-                center_x = int(largest_contour_moments['m10'] / largest_contour_moments['m00'])
-            else:
-                center_x = int(largest_contour_moments['m10'])
-
-            center_x = center_x * 0.1
-
-            if(center_x != 0.0):
-                u = r/2*abs(center_x)
-                w = -r/d*center_x
-
+            
+    print("here")
     return u, w
 
 
