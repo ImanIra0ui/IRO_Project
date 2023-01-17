@@ -25,6 +25,7 @@ from nav_msgs.msg import Odometry
 
 WALL_OFFSET = 2.
 WIDTH = 0
+
 X = 0
 Y = 1
 YAW = 2
@@ -36,7 +37,7 @@ def get_velocity(img):
 
     mask = cv2.inRange(img, lower_red, upper_red)
 
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, _ = cv2.findContours(mask, mode=cv2.RETR_EXTERNAL, method= cv2.CHAIN_APPROX_NONE)
 
     max_u = .2
 
@@ -58,10 +59,9 @@ def get_velocity(img):
         return u, w
 
     else:
-        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # ret, thresh = cv2.threshold(img_gray, 150, 255, cv2.THRESH_BINARY)
-        edged = cv2.Canny(img_gray, 30, 200)
-        contours, hierarchy = cv2.findContours(image=edged, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_NONE)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        edged = cv2.Canny(gray, 30, 200)
+        contours, _ = cv2.findContours(image=edged, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_NONE)
 
         #if obstacle
         if(contours):
@@ -76,11 +76,11 @@ def get_velocity(img):
             if(largest_contour[0][0][0]>=19 and largest_contour[0][0][0]<=26):
                 return u, w
 
-            center_x = (WIDTH/2 - center_x) * 0.1
+            center_x = WIDTH/2 - center_x * 0.1
 
             if(center_x != 0.0):
                 u = r/2*abs(center_x)
-                w = -r/d*center_x
+                w = r/d*center_x
 
             return u, w
 
@@ -133,11 +133,9 @@ class PotentialFieldNavigation(Node):
         cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         img = np.asarray(cv_image, dtype=np.uint8)
         img = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
-        WIDTH = img.shape[1]
-        print(WIDTH)
-        self.image = img
         img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
         img = cv2.flip(img, 1)
+        WIDTH = img.shape[1]
         self.image = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
     def timer_callback(self):
