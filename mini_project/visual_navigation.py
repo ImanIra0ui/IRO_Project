@@ -73,7 +73,7 @@ def get_velocity(img):
             else:
                 center_x = int(largest_contour_moments['m10'])
 
-            if(largest_contour[0][0][0]>=19 and largest_contour[0][0][0]<=26):
+            if(largest_contour[0][0][0]>=21 and largest_contour[0][0][0]<=26):
                 return u, w
 
             center_x = WIDTH/2 - center_x * 0.1
